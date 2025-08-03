@@ -1,27 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Audio Relay</title>
-</head>
-<body style="margin:0; background:#000;">
-  <audio id="relayAudio" preload="auto"></audio>
-
   <script>
-    const audio = document.getElementById("relayAudio");
-
     window.addEventListener("message", (event) => {
-      try {
-        const { url, volume = 1.0 } = JSON.parse(event.data);
-
-        if (!url.endsWith(".mp3")) return;
-        audio.src = url;
-        audio.volume = volume;
-        audio.play().catch(err => console.warn("🎧 Audio failed:", err));
-      } catch (err) {
-        console.warn("Bad audio message:", err);
+      if (event.data === "play-sound") {
+        const audio = document.getElementById("fx");
+        audio.currentTime = 0;
+        audio.play().catch(e => console.warn("Playback failed", e));
       }
-    }, false);
+    });
   </script>
+</head>
+<body>
+  <audio id="fx" src="success-340660.mp3" preload="auto"></audio>
 </body>
 </html>
